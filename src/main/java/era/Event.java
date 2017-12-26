@@ -2,8 +2,6 @@ package era;
 
 public interface Event {
 
-
-    ActionType actionType();
-
+    State handle();
 
 }

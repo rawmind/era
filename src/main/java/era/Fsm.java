@@ -1,31 +1,42 @@
 package era;
 
+import java.util.Optional;
+
 public class Fsm {
 
+    Node root;
 
-    Action initAction;
+    Fsm add(State state, Action action) {
+        Node next = new Node(state, action);
+        if (this.root == null) {
+            this.root = next;
+        } else {
+            this.root = new Node(next, root.state, root.action);
+        }
+        return this;
+    }
 
-    public Fsm() {
 
-        Action startCluster = new Action("Start node", "");
-        initAction = startCluster;
-        Action getGeo = new Action("Get geo info", "sync");
-        Action checkIsNodeRun = new Action("Check node", "");
-        Action runNode = new Action("Run node", "");
-        Action joinCluster = new Action("Await", "");
-
-        startCluster
-                .bind(getGeo, new Success("config fetched"))
-                .bind(checkIsNodeRun, new Success("node is not run"))
-                .bind(runNode, new Success("node is running"))
-                .bind(joinCluster, new Success("node is run"));
-
+    public void run() {
 
     }
 
 
+    private class Node {
 
+        final Node next;
+        final State state;
+        final Action action;
 
+        Node(State state, Action action) {
+            this(null, state, action);
+        }
 
+        Node(Node next, State state, Action action) {
+            this.next = next;
+            this.state = state;
+            this.action = action;
+        }
 
+    }
 }

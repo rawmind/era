@@ -1,4 +1,4 @@
 package era;
 
-public class Failed extends Event {
+public interface Failed extends Event {
 }
